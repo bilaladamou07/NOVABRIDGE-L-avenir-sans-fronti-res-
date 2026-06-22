@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVABRIDGE - Inscription Étudiant</title>
+    <!-- Intégration de polices modernes et icônes -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        /* CHARTE GRAPHIQUE NOVABRIDGE */
+        :root {
+            --primary-blue: #0A1D37; 
+            --gold: #C5A059;         
+            --light-bg: #F4F6F9;     
+            --white: #FFFFFF;
+            --text-color: #333333;
+            --border-color: #E2E8F0;
+            --success-green: #25D366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* EN-TÊTE / LOGO */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-area {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-nova { color: var(--primary-blue); }
+        .logo-bridge { color: var(--gold); }
+
+        .slogan {
+            color: var(--primary-blue);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            margin-top: -5px;
+        }
+
+        .slogan::before, .slogan::after {
+            content: "—";
+            color: var(--gold);
+            margin: 0 10px;
+        }
+
+        /* FORMULAIRE */
+        .registration-form {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(10, 29, 55, 0.06);
+            border-top: 6px solid var(--gold);
+            margin-bottom: 40px;
+        }
+
+        .registration-form h2 {
+            color: var(--primary-blue);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .registration-form h2 i { color: var(--gold); }
+        .form-subtitle { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+
+        /* GRILLE DE SAISIE */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .full-width { grid-column: span 2; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group label { font-size: 0.85rem; font-weight: 600; color: var(--primary-blue); }
+
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: #A0AEC0;
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .input-wrapper input, .input-wrapper select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #FAFAFA;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .input-wrapper input:focus, .input-wrapper select:focus {
+            border-color: var(--primary-blue);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(10, 29, 55, 0.05);
+        }
+
+        /* BOUTON SOUMETTRE */
+        .submit-btn {
+            width: 100%;
+            margin-top: 30px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #122c52;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(10, 29, 55, 0.15);
+        }
+
+        /* MESSAGE DE SUCCÈS */
+        .success-message {
+            display: none;
+            background-color: #E6FFFA;
+            border: 1.5px solid var(--success-green);
+            color: #234E52;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* ZONE D'ADMINISTRATION POUR VOIR LES INSCRITS */
+        .admin-section {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(10, 29, 55, 0.04);
+        }
+
+        .admin-section h3 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-btn {
+            background: none;
+            border: 1px solid #E53E3E;
+            color: #E53E3E;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .clear-btn:hover { background-color: #FFF5F5; }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 12px;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) { background-color: #F8FAFC; }
+        .no-data { text-align: center; color: #718096; padding: 20px; }
+
+        /* PIED DE PAGE */
+        .footer { text-align: center; margin-top: 40px; }
+        .footer p { font-size: 0.85rem; font-weight: 600; color: var(--gold); letter-spacing: 3px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 650px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .registration-form { padding: 25px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <div class="logo-area">
+                <span class="logo-nova">NOVA</span><span class="logo-bridge">BRIDGE</span>
+            </div>
+            <p class="slogan">L'AVENIR SANS FRONTIÈRES</p>
+        </header>
+
+        <!-- Message d'alerte succès -->
+        <div id="successAlert" class="success-message">
+            <i class="fa-solid fa-circle-check"></i> Votre inscription a été enregistrée avec succès !
+        </div>
+
+        <!-- Formulaire d'inscription -->
+        <form id="studentForm" class="registration-form">
+            <h2><i class="fa-solid fa-graduation-cap"></i> Inscription Étudiant</h2>
+            <p class="form-subtitle">Remplissez le formulaire officiel pour soumettre votre dossier académique.</p>
+
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="lastname">Nom</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="lastname" required placeholder="Ex: Ousmane">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="firstname">Prénom(s)</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="firstname" required placeholder="Ex: Ibrahim">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="birthdate">Date de naissance</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <input type="date" id="birthdate" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="birthplace">Lieu de naissance</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="birthplace" required placeholder="Ex: Niamey">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="whatsapp">Numéro WhatsApp</label>
+                    <div class="input-wrapper">
+                        <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+                        <input type="tel" id="whatsapp" required placeholder="Ex: +227 90 90 54 54">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="passport">Numéro de passeport</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-passport"></i>
+                        <input type="text" id="passport" required placeholder="Ex: N12345678">
+                    </div>
+                </div>
+
+                <div class="input-group full-width">
